@@ -35,9 +35,9 @@ public class Bank {
       //System.out.printf("from: %2d, to: %2d\n", from, to);
       lock[from].lock();  // 0  | 1
       lock[to].lock();    // 1  | 0
-//    } finally {
-//      mutex.unlock();
-//    }
+   } finally {
+     mutex.unlock();
+   }
     try {
       // while (accounts[from] < amount){
       //   con[from].await();
@@ -55,13 +55,13 @@ public class Bank {
   public double getTotalBalance() {
     double sum = 0;
     // lock.lock();
-    try {
+    // try {
       for (int i = 0; i < accounts.length; ++i) {
         sum += accounts[i];
       }
-    } finally {
+    // } finally {
       // lock.unlock();
-    }
+    // }
 
     return sum;
   }
