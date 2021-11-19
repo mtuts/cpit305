@@ -14,5 +14,6 @@ public class Demo2 {
     t1.interrupt();
     scan.nextLine();
     t2.interrupt();
+    scan.close();
   }
 }
