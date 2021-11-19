@@ -1,3 +1,5 @@
+package lab08;
+
 public class Monitor extends Thread {
     private Thread[] threads;
 

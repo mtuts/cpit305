@@ -1,25 +1,17 @@
+package lab10;
+
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
 public class Main {
 
-  public static void main(String[] args) throws InterruptedException {
-    Bank bank = new Bank(10, 1000);
-    System.out.printf("Bank total balance: %.2f\n", bank.getTotalBalance());
-    bank.listAllAccounts();
+  public static void main(String[] args) {
+    BlockingQueue<Object> queue = new ArrayBlockingQueue<>(10);
 
-    Report report = new Report(bank);
-    report.start();
+    Consumer consumer = new Consumer(queue);
+    Producer producer = new Producer(queue);
 
-
-    ATM[] atm = new ATM[bank.numberOfAccounts()];
-    for (int i = 0; i < atm.length; i++) {
-      atm[i] = new ATM(bank, i);
-      atm[i].start();
-    }
-    
-    Monitor monitor = new Monitor(atm);
-    monitor.start();
-
-    for (int i = 0; i < atm.length; ++i) {
-      atm[i].join();
-    }
+    consumer.start();
+    producer.start();
   }
 }

@@ -1,3 +1,5 @@
+package lab07;
+
 public class Report extends Thread {
   private Bank bank;
 

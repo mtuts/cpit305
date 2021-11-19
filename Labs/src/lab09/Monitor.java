@@ -1,3 +1,5 @@
+package lab09;
+
 public class Monitor extends Thread {
     private Thread[] threads;
 
@@ -10,7 +12,7 @@ public class Monitor extends Thread {
         while (true) {
             int c = 0;
             for (int i = 0; i < threads.length; ++i) {
-                if (threads[i].getState() == State.WAITING) {
+                if (threads[i].getState() == State.WAITING || threads[i].getState() == State.BLOCKED) {
                     c++;
                 }
             }

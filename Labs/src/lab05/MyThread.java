@@ -1,7 +1,8 @@
+package lab05;
 
-public class myThread extends Thread {
+public class MyThread extends Thread {
   Thread q;
-  public myThread(Thread t) {
+  public MyThread(Thread t) {
     q = t;
   }
 

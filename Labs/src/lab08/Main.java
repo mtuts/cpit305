@@ -1,4 +1,4 @@
-package lab09;
+package lab08;
 
 public class Main {
 

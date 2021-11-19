@@ -1,3 +1,5 @@
+package lab05;
+
 public class Counter extends Thread {
   public static int c = 0;
 

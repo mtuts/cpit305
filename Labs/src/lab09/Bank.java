@@ -1,21 +1,21 @@
+package lab09;
+
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Bank {
   private double[] accounts;
-  private Lock[] lock;
-  private Lock mutex;
-  private Condition[] con;
+  private ReentrantReadWriteLock rw;
+  private Lock readLock;
+  private Lock writeLock;
+  private Condition con;
 
   public Bank(int num_of_accounts, double balance) {
-    mutex = new ReentrantLock();
-    lock = new ReentrantLock[num_of_accounts];
-    con = new Condition[num_of_accounts];
-    for (int i = 0; i < num_of_accounts; ++i) {
-      lock[i] = new ReentrantLock();
-      con[i] = lock[i].newCondition();
-    }
+    rw = new ReentrantReadWriteLock();
+    readLock = rw.readLock();
+    writeLock = rw.writeLock();
+    con = writeLock.newCondition();
 
     accounts = new double[num_of_accounts];
     for (int i = 0; i < num_of_accounts; ++i) {
@@ -28,41 +28,29 @@ public class Bank {
   }
 
   public void transfer(int from, int to, double amount) throws InterruptedException {
-    mutex.lock();
-    try {
-      lock[from].lock();  // 0  | 1
-      lock[to].lock();    // 1  | 0
-    } finally {
-      mutex.unlock();
-    }
+    writeLock.lock();
     try {
       while (accounts[from] < amount){
-        con[from].await();
+        con.await();
       }
       accounts[from] -= amount;
       accounts[to] += amount;
 
-      con[to].signalAll();
+      con.signalAll();
     } finally {
-      mutex.lock();
-      try {
-        lock[from].unlock();
-        lock[to].unlock();
-      } finally {
-        mutex.unlock();
-      }
+      writeLock.unlock();
     }
   }
 
   public double getTotalBalance() {
     double sum = 0;
-    // lock.lock();
+    readLock.lock();
     try {
       for (int i = 0; i < accounts.length; ++i) {
         sum += accounts[i];
       }
     } finally {
-      // lock.unlock();
+      readLock.unlock();
     }
 
     return sum;
@@ -70,8 +58,13 @@ public class Bank {
 
   public void listAllAccounts() {
 
-    for (int i = 0; i < accounts.length; ++i) {
-      System.out.printf("%4d: \t %.2f\n", i, accounts[i]);
+    readLock.lock();
+    try {
+      for (int i = 0; i < accounts.length; ++i) {
+        System.out.printf("%4d: \t %.2f\n", i, accounts[i]);
+      }
+    } finally {
+      readLock.unlock();
     }
   }
 }

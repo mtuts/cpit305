@@ -1,22 +1,24 @@
+package lab10;
+
 import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 
-public class Producer extends Thread {
+public class Consumer extends Thread {
 
   private BlockingQueue<Object> queue;
 
-  public Producer(BlockingQueue<Object> queue) {
+  public Consumer(BlockingQueue<Object> queue) {
     this.queue = queue;
   }
 
   @Override
   public void run() {
     while (true) {
-      Date d = new Date();
-      System.out.printf("Producer produce %s, \t %d\n", d.toString(), queue.size());
       try {
-        queue.put(d);
-//        Thread.sleep(100);
+        //Thread.sleep(100);
+        Date d = (Date) queue.take();
+
+        System.out.printf("Consumer consumes %s \t %d\n", d.toString(), queue.size());
       } catch (InterruptedException e) {
         System.err.println(e.getMessage());
       }

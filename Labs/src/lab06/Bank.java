@@ -1,3 +1,5 @@
+package lab06;
+
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -30,23 +32,27 @@ public class Bank {
   public void transfer(int from, int to, double amount) throws InterruptedException {
     mutex.lock();
     try {
-      //System.out.printf("from: %2d, to: %2d\n", from, to);
       lock[from].lock();  // 0  | 1
       lock[to].lock();    // 1  | 0
-//    } finally {
-//      mutex.unlock();
-//    }
+    } finally {
+      mutex.unlock();
+    }
     try {
-      // while (accounts[from] < amount){
-      //   con[from].await();
-      // }
+      while (accounts[from] < amount){
+        con[from].await();
+      }
       accounts[from] -= amount;
       accounts[to] += amount;
 
-      // con[to].signal();
+      con[to].signalAll();
     } finally {
-      lock[from].unlock();
-      lock[to].unlock();
+      mutex.lock();
+      try {
+        lock[from].unlock();
+        lock[to].unlock();
+      } finally {
+        mutex.unlock();
+      }
     }
   }
 

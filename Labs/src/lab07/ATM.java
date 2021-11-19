@@ -1,3 +1,5 @@
+package lab07;
+
 public class ATM extends Thread {
 
   private Bank bank;

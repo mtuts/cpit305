@@ -1,3 +1,5 @@
+package lab06;
+
 public class Report extends Thread {
   private Bank bank;
 

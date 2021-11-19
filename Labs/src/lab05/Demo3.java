@@ -1,3 +1,5 @@
+package lab05;
+
 public class Demo3 {
   public static void main(String[] args) throws InterruptedException {
     Counter counter1 = new Counter();
