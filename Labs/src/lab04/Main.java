@@ -26,14 +26,19 @@ public class Main {
 
       if (choice.equals("1")) {
         // add new
-        // move to the end of file
+        // move to the first deleted record or to the end of file
         raf.seek(0);
         long pos = 0;
-        byte flag = raf.readByte();
-        while (flag != 0 && pos < raf.length() - RECORD_SIZE) {
-          raf.skipBytes((int) (RECORD_SIZE - 1));
+        byte flag = 0;
+        if (raf.length() > 1) {
           flag = raf.readByte();
-          pos += RECORD_SIZE;
+          System.out.println(raf.length());
+          while (flag != 0 && pos <= raf.length() - RECORD_SIZE) {
+            pos += RECORD_SIZE;
+            raf.seek(pos);
+            flag = raf.readByte();
+            System.out.printf("pos: %d, flag: %d\n", pos, flag);
+          }
         }
         if (flag == 0 || pos >= raf.length() - RECORD_SIZE) {
           if (pos >= raf.length()) {
@@ -41,7 +46,7 @@ public class Main {
           } else {
             raf.seek(pos);
           }
-          System.out.printf("pos: %d, flag: %d\n", pos, flag);
+          System.out.printf("pos: %d, flag: %d, len: %d\n", pos, flag, raf.length());
           enterDataWithID(raf, scan);
         }
       } else if (choice.equals("2")) {

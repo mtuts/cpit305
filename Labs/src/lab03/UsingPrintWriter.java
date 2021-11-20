@@ -32,6 +32,7 @@ public class UsingPrintWriter {
       System.err.println(e.getMessage());
     } finally {
       if (writer != null) writer.close();
+      scan.close();
     }
   }
 }

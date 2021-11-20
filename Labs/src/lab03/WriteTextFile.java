@@ -36,6 +36,7 @@ public class WriteTextFile {
       } catch (IOException e) {
         System.err.println(e.getMessage());
       }
+      scan.close();
     }
   }
 }
