@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
+-- MariaDB dump 10.19  Distrib 10.5.12-MariaDB, for debian-linux-gnu (aarch64)
 --
 -- Host: localhost    Database: nation
 -- ------------------------------------------------------
--- Server version	5.5.5-10.4.8-MariaDB
+-- Server version	10.5.12-MariaDB-0+deb11u1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
- SET NAMES utf8mb4 ;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -16,20 +16,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `nation`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `nation` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
-USE `nation`;
-
---
 -- Table structure for table `continents`
 --
 
 DROP TABLE IF EXISTS `continents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `continents` (
   `continent_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -53,7 +45,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `countries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `countries` (
   `country_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
@@ -86,7 +78,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `country_languages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `country_languages` (
   `country_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
@@ -114,7 +106,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `country_stats`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `country_stats` (
   `country_id` int(11) NOT NULL,
   `year` int(11) NOT NULL,
@@ -136,36 +128,12 @@ INSERT INTO `country_stats` VALUES (1,1986,62644,405463417),(1,1987,61833,487602
 UNLOCK TABLES;
 
 --
--- Table structure for table `guests`
---
-
-DROP TABLE IF EXISTS `guests`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `guests` (
-  `guest_id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  PRIMARY KEY (`guest_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `guests`
---
-
-LOCK TABLES `guests` WRITE;
-/*!40000 ALTER TABLE `guests` DISABLE KEYS */;
-INSERT INTO `guests` VALUES (1,'John'),(2,'Jane'),(3,'Jean'),(4,'Storm'),(5,'Beast');
-/*!40000 ALTER TABLE `guests` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `languages`
 --
 
 DROP TABLE IF EXISTS `languages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `languages` (
   `language_id` int(11) NOT NULL AUTO_INCREMENT,
   `language` varchar(50) NOT NULL,
@@ -184,36 +152,12 @@ INSERT INTO `languages` VALUES (1,'Dutch'),(2,'English'),(3,'Papiamento'),(4,'Sp
 UNLOCK TABLES;
 
 --
--- Table structure for table `region_areas`
---
-
-DROP TABLE IF EXISTS `region_areas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `region_areas` (
-  `region_name` varchar(100) NOT NULL,
-  `region_area` decimal(15,2) NOT NULL,
-  PRIMARY KEY (`region_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `region_areas`
---
-
-LOCK TABLES `region_areas` WRITE;
-/*!40000 ALTER TABLE `region_areas` DISABLE KEYS */;
-INSERT INTO `region_areas` VALUES ('Antarctica',13132101.00),('Australia and New Zealand',8011939.00),('Baltic Countries',175117.00),('British Islands',313173.00),('Caribbean',234423.00),('Central Africa',6612667.00),('Central America',2479532.00),('Eastern Africa',6299891.00),('Eastern Asia',11774482.00),('Eastern Europe',18814094.00),('Melanesia',540774.00),('Micronesia',3102.00),('Micronesia/Caribbean',16.00),('Middle East',4820592.00),('Nordic Countries',1321901.00),('North America',21500515.00),('Northern Africa',8524703.00),('Polynesia',8463.00),('South America',17864926.00),('Southeast Asia',4494801.00),('Southern Africa',2674778.00),('Southern and Central Asia',10791130.00),('Southern Europe',1316392.40),('Western Africa',6138338.00),('Western Europe',1108456.50);
-/*!40000 ALTER TABLE `region_areas` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `regions`
 --
 
 DROP TABLE IF EXISTS `regions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `regions` (
   `region_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -233,30 +177,6 @@ LOCK TABLES `regions` WRITE;
 INSERT INTO `regions` VALUES (1,'Caribbean',1),(2,'Southern and Central Asia',2),(3,'Central Africa',3),(4,'Southern Europe',4),(5,'Middle East',2),(6,'South America',5),(7,'Polynesia',6),(8,'Antarctica',7),(9,'Australia and New Zealand',6),(10,'Western Europe',4),(11,'Eastern Africa',3),(12,'Western Africa',3),(13,'Eastern Europe',4),(14,'Central America',1),(15,'North America',1),(16,'Southeast Asia',2),(17,'Southern Africa',3),(18,'Eastern Asia',2),(19,'Nordic Countries',4),(20,'Northern Africa',3),(21,'Baltic Countries',4),(22,'Melanesia',6),(23,'Micronesia',6),(24,'British Islands',4),(25,'Micronesia/Caribbean',6);
 /*!40000 ALTER TABLE `regions` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `vips`
---
-
-DROP TABLE IF EXISTS `vips`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `vips` (
-  `vip_id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  PRIMARY KEY (`vip_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `vips`
---
-
-LOCK TABLES `vips` WRITE;
-/*!40000 ALTER TABLE `vips` DISABLE KEYS */;
-INSERT INTO `vips` VALUES (1,'Jane'),(2,'Charles'),(3,'John'),(4,'Wolverine'),(5,'Rogue');
-/*!40000 ALTER TABLE `vips` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -267,4 +187,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-18 11:48:19
+-- Dump completed on 2021-11-25  3:19:07

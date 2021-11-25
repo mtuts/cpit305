@@ -112,7 +112,8 @@ public class Interactive {
     System.out.print("Enter number of records to display: ");
     int n = Integer.parseInt(reader.readLine());
 
-    String sql = "SELECT c.name AS country, r.name AS region FROM `countries` c RIGHT OUTER JOIN regions r ON (c.region_id = r.region_id) ";
+    String sql = "SELECT c.name AS country, r.name AS region FROM `countries` c ";
+    sql += "RIGHT OUTER JOIN regions r ON (c.region_id = r.region_id) ";
     sql += " LIMIT ?, ?";
     PreparedStatement stmt = conn.prepareStatement(sql);
     stmt.setInt(1, b);
