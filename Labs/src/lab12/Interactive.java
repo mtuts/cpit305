@@ -8,9 +8,15 @@ import java.util.ArrayList;
 
 
 public class Interactive {
+  final static String MENU_LIST_ALL_TABLE = "1";
+  final static String MENU_DESCRIBE_TABLE = "2";
+  final static String MENU_COUNTRY_REGION = "3";
+  final static String MENU_INSERT_CAR_INF = "4";
+  final static String MENU_EXIT = "9";
   final static String DB_URL = "jdbc:mysql://localhost/nation";
   final static String DB_USER = "root";
   final static String DB_PASS = "123";
+
   
   static Connection conn = null;
   static BufferedReader reader = null;
@@ -27,18 +33,22 @@ public class Interactive {
         String line = reader.readLine();
 
         switch (line) {
-        case "1":
+        case MENU_LIST_ALL_TABLE:
             listAllTables();
             break;
-        case "2":
+        case MENU_DESCRIBE_TABLE:
             describeTable();
             break;
-        case "3":
+        case MENU_COUNTRY_REGION:
             countriesRegion();
             break;
-        case "4":
+
+        case MENU_INSERT_CAR_INF:
+          insertNewCar();
+          break;
+        case MENU_EXIT:
             flag = false;
-            break;
+            continue;
         }
 
   /*
@@ -67,10 +77,11 @@ public class Interactive {
       System.out.println("\n-------------------------------------");
       System.out.println("Welcome to Nation Database");
       System.out.println("-------------------------------------\n");
-      System.out.println("1. List All tables");
-      System.out.println("2. Describe table");
-      System.out.println("3. List Countries with Region");
-      System.out.println("4. Exit");
+      System.out.println(MENU_LIST_ALL_TABLE + ". List All tables");
+      System.out.println(MENU_DESCRIBE_TABLE + ". Describe table");
+      System.out.println(MENU_COUNTRY_REGION + ". List Countries with Region");
+      System.out.println(MENU_INSERT_CAR_INF + ". Insert new car");
+      System.out.println(MENU_EXIT + ". Exit");
 
       System.out.print("Your choice: ");
 
@@ -95,9 +106,9 @@ public class Interactive {
       System.out.print("Enter table number: ");
       int num = Integer.parseInt(reader.readLine());
 
-      System.out.printf("\n----- %s ------\n", tables.get(num));
+      System.out.printf("\n----- %s ------\n", tables.get(num - 1));
       Statement stmt = conn.createStatement();
-      ResultSet rs = stmt.executeQuery("DESCRIBE " + tables.get(num) + ";");
+      ResultSet rs = stmt.executeQuery("DESCRIBE " + tables.get(num - 1) + ";");
       while (rs.next()) {
           for (int i = 0; i < 6; i++) {
               System.out.printf("%s\t", rs.getString(i + 1));
@@ -126,5 +137,23 @@ public class Interactive {
       System.out.printf("%-30s | %-30s\n", rs.getString(1), rs.getString(2));
     }
     System.out.println("---------------------------------------------------------------");
+  }
+
+  private static void insertNewCar() throws SQLException, IOException {
+    System.out.print("Enter Car Model: ");
+    String model = reader.readLine();
+    
+    System.out.print("Enter Car Year: ");
+    int year = Integer.parseInt(reader.readLine());
+    
+    String sql = "INSERT INTO car (model, year) VALUES (?, ?);";
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ps.setString(1, model);
+    ps.setInt(2, year);
+
+    int n = ps.executeUpdate();
+
+    System.out.println(n + " recored(s) have been added");
+
   }
 }
